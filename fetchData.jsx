@@ -97,7 +97,7 @@ function App() {
   const { Fragment, useState, useEffect, useReducer } = React;
   const [query, setQuery] = useState('MIT');
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 5;
   const [{ data, isLoading, isError }, doFetch] = useDataApi(
     'https://datausa.io/api/data?drilldowns=Nation&measures=Population',
     {
