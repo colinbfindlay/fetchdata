@@ -91,21 +91,23 @@ const dataFetchReducer = (state, action) => {
 };
 
 // App that gets data from Hacker News url
+// Sample url from exercise: https://hn.algolia.com/api/v1/search?query=MIT
+
 function App() {
   const { Fragment, useState, useEffect, useReducer } = React;
   const [query, setQuery] = useState('MIT');
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [{ data, isLoading, isError }, doFetch] = useDataApi(
-    'https://hn.algolia.com/api/v1/search?query=MIT',
+    'https://datausa.io/api/data?drilldowns=Nation&measures=Population',
     {
-      hits: [],
+      data: []
     }
   );
   const handlePageChange = (e) => {
     setCurrentPage(Number(e.target.textContent));
   };
-  let page = data.hits;
+  let page = data.data;
   if (page.length >= 1) {
     page = paginate(page, currentPage, pageSize);
     console.log(`currentPage: ${currentPage}`);
@@ -119,13 +121,13 @@ function App() {
         <ul className="list-group">
           {page.map((item) => (
             <li key={item.objectID} className="list-group-item">
-              <a href={item.url}>{item.title}</a>
+              <a>{item.Nation} population in {item.Year} was {item.Population}</a>
             </li>
           ))}
         </ul>
       )}
       <Pagination
-        items={data.hits}
+        items={data.data}
         pageSize={pageSize}
         onPageChange={handlePageChange}
       ></Pagination>
